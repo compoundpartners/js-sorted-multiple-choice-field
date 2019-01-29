@@ -1,8 +1,6 @@
 /*
  SelectFilter2 - Turns a multiple-select box into a filter interface.
-
  Different than SelectFilter because this is coupled to the admin framework.
-
  Requires core.js and OrderedSelectBox.js
  */
 
@@ -15,7 +13,7 @@ function findForm(node) {
 }
 
 var OrderedSelectFilter = {
-    init: function(field_id, field_name, is_stacked) {
+    init: function(field_id, verbose_name, verbose_name_plural, is_stacked) {
         if (field_id.match(/__prefix__/)){
             // Don't intialize on empty forms.
             return;
@@ -49,8 +47,8 @@ var OrderedSelectFilter = {
 
         // <div class="selector-available">
         var selector_available = quickElement('div', selector_div, '');
-        selector_available.className = 'selector-available';
-        var title_available = quickElement('h2', selector_available, interpolate(gettext('Available %s') + ' ', [field_name]));
+        selector_available.className = 'selector-available  ordered';
+        var title_available = quickElement('h2', selector_available, interpolate(gettext('Available %s') + ' ', [verbose_name_plural]));
         quickElement(
                 'span', title_available, '',
                 'class', 'help help-tooltip help-icon',
@@ -60,7 +58,7 @@ var OrderedSelectFilter = {
                         'selecting them in the box below and then clicking the ' +
                         '"Choose" arrow between the two boxes.'
                     ),
-                    [field_name]
+                    [verbose_name_plural]
                 )
             );
 
@@ -72,7 +70,7 @@ var OrderedSelectFilter = {
         quickElement(
                 'span', search_filter_label, '',
                 'class', 'help-tooltip search-label-icon',
-                'title', interpolate(gettext("Type into this box to filter down the list of available %s."), [field_name])
+                'title', interpolate(gettext("Type into this box to filter down the list of available %s."), [verbose_name_plural])
             );
 
         filter_p.appendChild(document.createTextNode(' '));
@@ -93,8 +91,8 @@ var OrderedSelectFilter = {
 
         // <div class="selector-chosen">
         var selector_chosen = quickElement('div', selector_div, '');
-        selector_chosen.className = 'selector-chosen';
-        var title_chosen = quickElement('h2', selector_chosen, interpolate(gettext('Chosen %s') + ' ', [field_name]));
+        selector_chosen.className = 'selector-chosen ordered';
+        var title_chosen = quickElement('h2', selector_chosen, interpolate(gettext('Chosen %s') + ' ', [verbose_name_plural]));
         quickElement(
                 'span', title_chosen, '',
                 'class', 'help help-tooltip help-icon',
@@ -104,7 +102,7 @@ var OrderedSelectFilter = {
                         'selecting them in the box below and then clicking the ' +
                         '"Remove" arrow between the two boxes.'
                     ),
-                    [field_name]
+                    [verbose_name_plural]
                 )
             );
 
@@ -116,9 +114,9 @@ var OrderedSelectFilter = {
         // <ul class="selector-chooser">
         var selector_chooser = quickElement('ul', selector_div);
         selector_chooser.className = 'selector-chooser';
-        var up_link = quickElement('a', quickElement('li', selector_chooser, ''), gettext('Up'), 'href', 'javascript: (function(){ OrderedSelectBox.orderUp("' + field_id + '_to");})()');
+        var up_link = quickElement('a', quickElement('li', selector_chooser, ''), interpolate(gettext('Mover %s up'), [verbose_name]), 'title', interpolate(gettext('Mover %s up'), [verbose_name]), 'href', 'javascript: (function(){ OrderedSelectBox.orderUp("' + field_id + '_to");})()');
         up_link.className = 'selector-up';
-        var down_link = quickElement('a', quickElement('li', selector_chooser, ''), gettext('Down'), 'href', 'javascript: (function(){ OrderedSelectBox.orderDown("' + field_id + '_to");})()');
+        var down_link = quickElement('a', quickElement('li', selector_chooser, ''), interpolate(gettext('Mover %s down'), [verbose_name]), 'title', interpolate(gettext('Mover %s down'), [verbose_name]), 'href', 'javascript: (function(){ OrderedSelectBox.orderDown("' + field_id + '_to");})()');
         down_link.className = 'selector-down';
 
 
