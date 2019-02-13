@@ -62,7 +62,7 @@ class SortedFilteredSelectMultiple(forms.SelectMultiple):
     """
     A SortableSelectMultiple with a JavaScript filter interface.
 
-	Requires jQuery to be loaded.
+    Requires jQuery to be loaded.
 
     Note that the resulting JavaScript assumes that the jsi18n
     catalog has been loaded in the page
@@ -104,10 +104,14 @@ class SortedFilteredSelectMultiple(forms.SelectMultiple):
             verbose_name = final_attrs['verbose_name']
         else:
             verbose_name = name.split('-')[-1]
+        if 'verbose_name_plural' in final_attrs.keys():
+            verbose_name_plural = final_attrs['verbose_name_plural']
+        else:
+            verbose_name_plural = verbose_name
         output.append(u'</select>')
         output.append(u'<script>window.addEventListener("load", function(e) {')
-        output.append(u'OrderedSelectFilter.init("id_%s", "%s", %s, "%s") });</script>\n' % \
-                      (name, verbose_name, int(self.is_stacked), admin_media_prefix))
+        output.append(u'OrderedSelectFilter.init("id_%s", "%s", "%s", %s, "%s") });</script>\n' % \
+                      (name, verbose_name, verbose_name_plural, int(self.is_stacked), admin_media_prefix))
         output.append(u"""
         <script>
         (function($) {
@@ -118,11 +122,11 @@ class SortedFilteredSelectMultiple(forms.SelectMultiple):
                     if (typeof OrderedSelectFilter != "undefined"){
                         $(".sortedm2m").each(function(index, value){
                             var namearr = value.name.split('-');
-                            OrderedSelectFilter.init(value.id, namearr[namearr.length-1], false, "%s");
+                            OrderedSelectFilter.init(value.id, namearr[namearr.length-1], namearr[namearr.length-1], false, "%s");
                         });
                         $(".sortedm2mstacked").each(function(index, value){
                             var namearr = value.name.split('-');
-                            OrderedSelectFilter.init(value.id, namearr[namearr.length-1], true, "%s");
+                            OrderedSelectFilter.init(value.id, namearr[namearr.length-1], namearr[namearr.length-1], true, "%s");
                         });
                     }
                 }

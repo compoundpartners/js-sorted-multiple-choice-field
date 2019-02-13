@@ -1,0 +1,6 @@
+{
+    "package-name": "js-sorted-multiple-choice-field",
+    "installed-apps": [
+        "sortedm2m_filter_horizontal_widget"
+    ]
+}

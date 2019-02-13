@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
-from js_sorted_multiple_choice_field import __version__
+from sortedm2m_filter_horizontal_widget import __version__
 
 
 setup(
