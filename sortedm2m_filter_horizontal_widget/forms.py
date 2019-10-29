@@ -68,8 +68,10 @@ class SortedFilteredSelectMultiple(forms.SelectMultiple):
     catalog has been loaded in the page
     """
 
-    def __init__(self, is_stacked=False, attrs=None, choices=()):
+    def __init__(self, verbose_name=None, is_stacked=False, attrs=None, choices=()):
         self.is_stacked = is_stacked
+        if verbose_name:
+            attrs['verbose_name'] = verbose_name
         super(SortedFilteredSelectMultiple, self).__init__(attrs, choices)
 
     class Media:
